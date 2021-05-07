@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.DemoApplication;
-import com.example.demo.exceptions.DetailException;
 import com.example.demo.model.Person;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +35,7 @@ public class PersonServiceTest {
                               .address("add")
                               .name("rodz")
                               .createdDate(LocalDate.now())
+                              .birthDate(LocalDate.of(1991, 01,01))
                               .build();
         personService.createPerson(person);
 

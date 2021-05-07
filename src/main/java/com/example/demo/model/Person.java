@@ -10,7 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Data
 @Builder
@@ -28,4 +30,15 @@ public class Person {
     private String address;
 
     private LocalDate createdDate;
+
+    private LocalDate birthDate;
+    private String email;
+
+    @Transient
+    private Integer age;
+
+    public Integer getAge() {
+        return Period.between(this.birthDate, LocalDate.now()).getYears();
+    }
+
 }

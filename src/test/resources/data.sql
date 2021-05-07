@@ -1,1 +1,1 @@
-insert into person (id, name) values (1, 'rod');
+insert into person (id, name, email, birth_date) values (1, 'rod', 'a@a.com', '1991-01-01');

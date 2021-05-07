@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,17 +31,19 @@ public class PersonControllerTestMock {
     @MockBean
     private PersonService personService;
 
+    @Autowired
+    private ObjectMapper mapper;
+
     @Test
     void testCreate() throws Exception {
 
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         Person person = Person.builder()
                               .name("person-1")
                               .address("address-1")
+                              .birthDate(LocalDate.of(1978, 01, 01))
                               .build();
-        String payload = objectMapper.writeValueAsString(person);
+        String payload = mapper.writeValueAsString(person);
 
         when(personService.findByAddress(anyString())).thenReturn(Optional.of(person));
 

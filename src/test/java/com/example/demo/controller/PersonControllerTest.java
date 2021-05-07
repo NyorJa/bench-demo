@@ -51,6 +51,25 @@ public class PersonControllerTest {
         Person person = Person.builder()
                               .address("add")
                               .name("rods")
+                              .birthDate(LocalDate.of(1989,01,01))
+                              .createdDate(LocalDate.now())
+                              .build();
+
+        mockMvc.perform(post("/person/").contentType(MediaType.APPLICATION_JSON_VALUE)
+                                        .content(mapper.writeValueAsString(person)))
+               .andDo(print())
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    void testCreatePersonWithExistingEmail() throws Exception {
+
+
+        Person person = Person.builder()
+                              .address("add")
+                              .name("rods")
+                              .email("a@a.com")
+                              .birthDate(LocalDate.of(1989,01,01))
                               .createdDate(LocalDate.now())
                               .build();
 

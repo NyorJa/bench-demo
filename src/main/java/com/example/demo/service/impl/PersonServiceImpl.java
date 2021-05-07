@@ -1,13 +1,12 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exceptions.DetailException;
+import com.example.demo.exceptions.ExistingEmailException;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 
@@ -33,7 +32,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void createPerson(Person person) {
+    public void createPerson(Person person) throws ExistingEmailException {
+        Optional<Person> p = personRepository.findByEmail(person.getEmail());
+        if (p.isPresent()) {
+            throw new ExistingEmailException("Email: " + p.get().getEmail() + " is existing");
+        }
         personRepository.save(person);
     }
 }

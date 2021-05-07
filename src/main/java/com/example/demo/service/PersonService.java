@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.exceptions.DetailException;
 import com.example.demo.model.Person;
 
 import javax.persistence.EntityNotFoundException;
