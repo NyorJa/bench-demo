@@ -50,7 +50,7 @@ public class PersonControllerTest {
 
         Person person = Person.builder()
                               .address("add")
-                              .name("rod")
+                              .name("rods")
                               .createdDate(LocalDate.now())
                               .build();
 

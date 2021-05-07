@@ -34,7 +34,7 @@ public class PersonServiceTest {
     void testCreatePerson() {
         Person person = Person.builder()
                               .address("add")
-                              .name("rod")
+                              .name("rodz")
                               .createdDate(LocalDate.now())
                               .build();
         personService.createPerson(person);
