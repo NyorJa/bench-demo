@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.DemoApplication;
 import com.example.demo.model.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,8 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,14 +71,36 @@ public class PersonControllerTest {
                               .address("add")
                               .name("rods")
                               .email("a@a.com")
-                              .birthDate(LocalDate.of(1989,01,01))
+                              .birthDate(LocalDate.of(1989, 01, 01))
                               .createdDate(LocalDate.now())
                               .build();
 
-        mockMvc.perform(post(ROOT_PATH+ "/").contentType(MediaType.APPLICATION_JSON_VALUE)
-                                        .content(mapper.writeValueAsString(person)))
+        mockMvc.perform(post(ROOT_PATH + "/").contentType(MediaType.APPLICATION_JSON_VALUE)
+                                             .content(mapper.writeValueAsString(person)))
                .andDo(print())
                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testGetAll() throws Exception {
+        mockMvc.perform(get(ROOT_PATH + "/list")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+               .andDo(print())
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    void testDeletePerson() throws Exception {
+        mockMvc.perform(delete(ROOT_PATH + "/{id}", 1))
+               .andDo(print())
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    void testUpdatePerson() throws Exception {
+        mockMvc.perform(put(ROOT_PATH + "/{id}?name=rody", 3))
+               .andDo(print())
+               .andExpect(status().isOk());
     }
 
 }

@@ -39,7 +39,7 @@ public class PersonServiceTest {
                               .build();
         personService.createPerson(person);
 
-        assertEquals(2, person.getId());
+        assertEquals(4, person.getId());
     }
 
 }
