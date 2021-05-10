@@ -12,11 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,14 +41,10 @@ public class PersonControllerTestMock {
                               .build();
         String payload = mapper.writeValueAsString(person);
 
-        when(personService.findByAddress(anyString())).thenReturn(Optional.of(person));
-
-        mockMvc.perform(post("/person")
+        mockMvc.perform(post("/api/v1/person/")
                                 .content(payload)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                .andDo(print())
-               .andExpect(status().isOk());
-
-        verify(personService, times(1)).findByAddress(anyString());
+               .andExpect(status().isCreated());
     }
 }

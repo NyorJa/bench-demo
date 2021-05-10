@@ -29,17 +29,19 @@ public class PersonControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
+    private static final String ROOT_PATH = "/api/v1/person";
+
 
     @Test
     void testFindByName() throws Exception {
-        mockMvc.perform(get("/person/{name}", "rod"))
+        mockMvc.perform(get(ROOT_PATH + "/{name}", "rod"))
                .andDo(print())
                .andExpect(status().isOk());
     }
 
     @Test
     void testFindByNameNotFound() throws Exception {
-        mockMvc.perform(get("/person/{name}", "nyor"))
+        mockMvc.perform(get(ROOT_PATH + "/{name}", "nyor"))
                .andDo(print())
                .andExpect(status().isNotFound());
     }
@@ -55,10 +57,10 @@ public class PersonControllerTest {
                               .createdDate(LocalDate.now())
                               .build();
 
-        mockMvc.perform(post("/person/").contentType(MediaType.APPLICATION_JSON_VALUE)
+        mockMvc.perform(post(ROOT_PATH + "/").contentType(MediaType.APPLICATION_JSON_VALUE)
                                         .content(mapper.writeValueAsString(person)))
                .andDo(print())
-               .andExpect(status().isOk());
+               .andExpect(status().isCreated());
     }
 
     @Test
@@ -73,10 +75,10 @@ public class PersonControllerTest {
                               .createdDate(LocalDate.now())
                               .build();
 
-        mockMvc.perform(post("/person/").contentType(MediaType.APPLICATION_JSON_VALUE)
+        mockMvc.perform(post(ROOT_PATH+ "/").contentType(MediaType.APPLICATION_JSON_VALUE)
                                         .content(mapper.writeValueAsString(person)))
                .andDo(print())
-               .andExpect(status().isOk());
+               .andExpect(status().isBadRequest());
     }
 
 }
